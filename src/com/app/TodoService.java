@@ -2,23 +2,26 @@ package com.app;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
 public class TodoService {
-    List<Todo> dataStore = new ArrayList<>();
+    private static List<Todo> dataStore = new ArrayList<>();
     public static int count = 0;
 
     public void addTodo(String title) {
         dataStore.add(new Todo(++count, title, LocalDate.now(), false));
     }
 
-    public void sort() {
-        dataStore.sort((e1, e2) -> Integer.compare(e1.getId(), e2.getId()));
+    public static <T> List<T> sort(List<T> list, Comparator<T> comparator) {
+        return list
+                .stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
-
 
     public void editTodo(int id, String newTitle) {
         List<Todo> list = filter(dataStore, e -> e.getId() == id);
@@ -53,7 +56,7 @@ public class TodoService {
     public static <T> List<T> remove(List<T> list, Predicate<T> predicate) {
         return list
                 .stream()
-                .filter(x -> predicate.test(x))
+                .filter(predicate)
                 .collect(Collectors.toList());
     }
 
@@ -71,7 +74,7 @@ public class TodoService {
     public <T> List<T> filter(List<T> list, Predicate<T> predicate) {
         return list
                 .stream()
-                .filter(x -> predicate.test(x))
+                .filter(predicate)
                 .collect(Collectors.toList());
     }
 
