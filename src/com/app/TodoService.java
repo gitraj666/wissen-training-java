@@ -24,17 +24,19 @@ public class TodoService {
     }
 
     public void editTodo(int id, String newTitle) {
-        List<Todo> list = filter(dataStore, e -> e.getId() == id);
-        for (Todo el : list)
-            el.setTitle(newTitle);
+        dataStore.replaceAll(item -> {
+            if (item.getId() == id)
+                item.setTitle(newTitle);
+
+            return item;
+        });
     }
 
     public void deleteTodo(int id) {
         try {
             if (id > count)
                 throw new IllegalAccessException("No such Id");
-            List<Todo> list = remove(dataStore, e -> e.getId() == id);
-            dataStore.removeAll(list);
+            dataStore.removeIf(item -> item.getId() == id);
             System.out.println("Todo Deleted " + id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
