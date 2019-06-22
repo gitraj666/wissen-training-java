@@ -35,10 +35,12 @@ public class Ex5 {
 //        }
 
 
-        vegMenu = menu
-                .stream()
-                .filter(t -> t.equals("veg"))
-                .collect(Collectors.toList());
+//        vegMenu = menu
+//                .stream()
+//                .filter(t -> t.equals("veg"))
+//                .collect(Collectors.toList());
+
+        menu.removeIf(t -> t.equals("nveg")); //Lambda Expression
 
         for (String item : vegMenu) {
             System.out.println(item);

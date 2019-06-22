@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Product {
 
     private int id;
@@ -5,6 +7,21 @@ public class Product {
     private double price;
 
     public Product() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id &&
+                Double.compare(product.price, price) == 0 &&
+                Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price);
     }
 
     public Product(int id, String name, double price) {

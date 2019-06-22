@@ -89,6 +89,10 @@ public class Functional_Programming {
         }
     }
 
+    public static Predicate<Integer> and(Predicate<Integer> p1, Predicate<Integer> p2) {
+        return i -> p1.test(i) && p2.test(i);
+    }
+
     public static void main(String[] args) {
         List<Product> products;
         // ---------------------------------------------------
@@ -106,5 +110,13 @@ public class Functional_Programming {
         products = getProducts(1000.00, 3000.00);
         display(products);
         // -----------------------------------------------------
+
+        Predicate<Integer> p1 = i -> i > 50;
+        Predicate<Integer> p2 = i -> i < 100;
+
+        Predicate<Integer> pred = and(p1, p2);
+
+        boolean res = pred.test(10000);
+        System.out.println(res);
     }
 }
